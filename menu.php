@@ -1,5 +1,17 @@
 <?php
 require "global.php";
+
+if(isset($_GET['refresh']))
+{
+	$refresh_tab = $_GET['refresh'];
+	echo $refresh_tab;
+}
+else{
+	$refresh_tab = 'status';
+}
+
+
+
 if(!isset($_SESSION['is_logged_in']) ||  $_SESSION['is_logged_in'] != "loggedin" ){
 	header("Location:index.php");
 }
@@ -84,6 +96,7 @@ $newpass2 = "";
 	<style type="text/css">
 		.content{
 			padding: 30px 50px;
+			padding-top: 10px; 
 		}
 
 		.top-menu{
@@ -118,6 +131,7 @@ $newpass2 = "";
     		font-size: 15px;
     		border-radius: 0;
     		margin-right: 0;
+    		padding-bottom: 3px;
 		}
 
 		.xiota-content .nav .active{
@@ -199,14 +213,20 @@ $newpass2 = "";
 
 <body>
 	<div id="content">
-		<img src="images/racworc.png" class="content"/>
+		<img src="images/racworc.png"/>
 	</div>
 
 	<div class="content">
 		
 		<div class="top-menu">
-			<div class="top-menu-item">Home</div>
+			<div class="top-menu-item">Username : <?=$_SESSION['username']?></div>
 
+			<div class="top-menu-item">
+				<a href="logout.php">Logout</a>
+			</div>	
+		</div>
+
+		
 			<?php
 				if (file_exists($mode_file_path)) 
 				{
@@ -215,182 +235,153 @@ $newpass2 = "";
 					if ($line == "Master")
 					{
 						//echo "<div class=\"top-menu-item-lg\">MIOTA</div>";
-						echo "<div style=\"color: #FF0000;\"><h1><b>MIOTA</b></h1></div>";
+						echo "<div><h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>MIOTA</b></h1></div>";
 					}
 					else
 					{
 						//echo "<div class=\"top-menu-item-lg\">RIOTA</div>";
-						echo "<div style=\"color: #FF0000;\"><h1><b>RIOTA</b></h1></div>";
+						echo "<div ><h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>RIOTA</b></h1></div>";
 					}
 				}
 			?>
-
-			<div class="top-menu-item">
-				<a href="logout.php">Logout</a>
-			</div>	
-		</div>
-
-		<div style="color: #000;font-size: 13px;font-weight: 600;text-align: left;">User Name : <?=$_SESSION['username']?></div>
-
 		<div class="xiota-content">
 			<ul class="nav nav-tabs">
-			  <li class="active"><a data-toggle="tab" href="#menu-status">Status</a></li>
-  			  <li><a data-toggle="tab" href="#menu-settings">Settings</a></li>
-			  <li><a data-toggle="tab" href="#menu-network">Network</a></li>
-			  <li><a data-toggle="tab" href="#menu-connections">Connections</a></li>
-			  <li><a data-toggle="tab" href="#menu-alerts">Alerts</a></li>
+			  <li class="<?php if($refresh_tab=="status")echo 'active';?>"><a data-toggle="tab" href="#menu-status">Status</a></li>
+  			  <li class="<?php if($refresh_tab=="settings")echo 'active';?>"><a data-toggle="tab" href="#menu-settings">Settings</a></li>
+			  <li class="<?php if($refresh_tab=="network")echo 'active';?>"><a data-toggle="tab" href="#menu-network">Network</a></li>
+			  <li class="<?php if($refresh_tab=="connections")echo 'active';?>"><a data-toggle="tab" href="#menu-connections">Connections</a></li>
+			  <li class="<?php if($refresh_tab=="alerts")echo 'active';?>"><a data-toggle="tab" href="#menu-alerts">Alerts</a></li>
 			</ul>
 
 			<form name="myform" method="POST" action="savesetting.php">
 			<div class="tab-content">
 			<!-- status tab --> 
-			 <div id="menu-status" class="tab-pane fade in active">
-				<!--
-			    <p>Some content in menu 1.</p>
-			    <p>Some content in menu 2.</p>
-			    <p>Some content in menu 3.</p>
-			    <p>etc...</p>
-				<div class="col-md-8"></div>
-				<button type="submit" class="col-md-3 save-btn">
-			   		Refresh
-			   	</button>
-			   </div>
-			   -->
-			  </div>
+			 <div id="menu-status" class="tab-pane fade in <?php if($refresh_tab=="status")echo 'active';?>">
+				
+			 </div>
 			  
-			  <!-- settings tab --> 
-			<div class="tab-content">
-			  <div id="menu-settings" class="tab-pane fade">
-			   <div class="row">
-			   	<div class="col-md-3 ">Hostname:</div>
-			   	<div class="col-md-9"><input value="<?=$host?>" name="host"></div>
-			   </div>
+			
+			  <div id="menu-settings" class="tab-pane fade in <?php if($refresh_tab=="settings")echo 'active';?>">
+				   <div class="row">
+				   	<div class="col-md-3 ">Hostname:</div>
+				   	<div class="col-md-9"><input value="<?=$host?>" name="host"></div>
+				   </div>
 
-			   <div class="row">
-			   	<div class="col-md-3">Mode:</div>
-			   	<div class="col-md-9"><input value="<?=$mode?>" name="mode"></div>
-			   </div>
+				   <div class="row">
+				   	<div class="col-md-3">Mode:</div>
+				   	<div class="col-md-9"><input value="<?=$mode?>" name="mode"></div>
+				   </div>
 
-			   <div class="row">
-			   	<div class="col-md-3">Boost Status:</div>
-			   	<!-- <div class="col-md-9"><input value="<?=$status?>" name="status"></div> -->
-				<div class="col-md-3">Enabled<input type="radio" name="boostenabled" value="enabled" <?php print $enabledstatus; ?> ></div>
-				<div class="col-md-3">Disabled<input type="radio" name="boostdisabled" value="disabled" <?php print $disabledstatus; ?> ></div>
-				</div>
+				   <div class="row">
+				   	<div class="col-md-3">Boost Status:</div>
+				   	<!-- <div class="col-md-9"><input value="<?=$status?>" name="status"></div> -->
+					<div class="col-md-3">Enabled<input type="radio" name="boostenabled" value="enabled" <?php print $enabledstatus; ?> ></div>
+					<div class="col-md-3">Disabled<input type="radio" name="boostdisabled" value="disabled" <?php print $disabledstatus; ?> ></div>
+					</div>
 
-			 <hr style="border: solid 1px #545050;"> 
-			   <div class="row">
-				<div class="col-md-6"><big><u><b>Change Password</b></u></big></div>
-			   </div>
-			   
-			   <div class="row">
-			   	<div class="col-md-3">New Password:</div>
-			   	<div class="col-md-3"><input value="<?=$newpass1?>" name="newpass1"></div>
-			   	<div class="col-md-3">Confirm Password:</div>
-			   	<div class="col-md-3"><input value="<?=$newpass2?>" name="newpass2"></div>
-			   </div>
+				 <hr style="border: solid 1px #545050;"> 
+				   <div class="row">
+					<div class="col-md-6"><big><u><b>Change Password</b></u></big></div>
+				   </div>
+				   
+				   <div class="row">
+				   	<div class="col-md-3">New Password:</div>
+				   	<div class="col-md-3"><input value="<?=$newpass1?>" name="newpass1"></div>
+				   	<div class="col-md-3">Confirm Password:</div>
+				   	<div class="col-md-3"><input value="<?=$newpass2?>" name="newpass2"></div>
+				   </div>
 
-			   <div class="row">
-			   	<button type="submit" class="col-md-3 save-btn">
-			   		Save
-			   	</button>
-				<div class="col-md-5"></div>
-				<!-- this button needs to call menu.php to refresh itself -->
-				<button type="submit" class="col-md-3 save-btn">
-			   		Refresh
-			   	</button>
-			   </div>
+				   <div class="row">
+				   	<button type="submit" class="col-md-3 save-btn">
+				   		Save
+				   	</button>
+					<div class="col-md-5"></div>
+					<!-- this button needs to call menu.php to refresh itself -->
+					<a type="submit" class="col-md-3 save-btn" href="<?=$base_url?>menu.php?refresh=settings">
+				   		Refresh
+				   	</a>
+				   </div>
 			  </div>
 			  
 			  <!-- network tab --> 
-			  <div id="menu-network" class="tab-pane fade">
-			   <div class="row">
-				<div class="col-md-6"><big><u><b>NETWORK SETTINGS</b></u></big></div>
-			   </div>
+			  <div id="menu-network" class="tab-pane fade in  <?php if($refresh_tab=="network")echo 'active';?>">
+				   <div class="row">
+					<div class="col-md-6"><big><u><b>NETWORK SETTINGS</b></u></big></div>
+				   </div>
 
-			   <div class="row">
-				<div class="col-md-3"><big><u><b>Eth0</b></u></big></div>
-				<div class="col-md-3"></div>
-				<div class="col-md-3"><big><u><b>Eth1</b></u></big></div>
-			   </div>
+				   <div class="row">
+					<div class="col-md-3"><big><u><b>Eth0</b></u></big></div>
+					<div class="col-md-3"></div>
+					<div class="col-md-3"><big><u><b>Eth1</b></u></big></div>
+				   </div>
 
-			   <div class="row">
-			   	<div class="col-md-3">IP:</div>
-			   	<div class="col-md-3"><input value="<?=$eth0ip?>" name="eth0ip"></div>
-			   	<div class="col-md-3">IP:</div>
-			   	<div class="col-md-3"><input value="<?=$eth1ip?>" name="eth1ip"></div>
-			   </div>
+				   <div class="row">
+				   	<div class="col-md-3">IP:</div>
+				   	<div class="col-md-3"><input value="<?=$eth0ip?>" name="eth0ip"></div>
+				   	<div class="col-md-3">IP:</div>
+				   	<div class="col-md-3"><input value="<?=$eth1ip?>" name="eth1ip"></div>
+				   </div>
 
-			   <div class="row">
-			   	<div class="col-md-3">Mask:</div>
-			   	<div class="col-md-3"><input value="<?=$eth0mask?>" name="eth0mask"></div>
-			   	<div class="col-md-3">Mask:</div>
-			   	<div class="col-md-3"><input value="<?=$eth1mask?>" name="eth1mask"></div>
-			   </div>
+				   <div class="row">
+				   	<div class="col-md-3">Mask:</div>
+				   	<div class="col-md-3"><input value="<?=$eth0mask?>" name="eth0mask"></div>
+				   	<div class="col-md-3">Mask:</div>
+				   	<div class="col-md-3"><input value="<?=$eth1mask?>" name="eth1mask"></div>
+				   </div>
 
-			   <div class="row">
-			   	<div class="col-md-3">Default GW:</div>
-			   	<div class="col-md-3"><input value="<?=$eth0gw?>" name="eth0gw"></div>
-			   	<div class="col-md-3">Default GW:</div>
-			   	<div class="col-md-3"><input value="<?=$eth1gw?>" name="eth1gw"></div>
-			   </div>
+				   <div class="row">
+				   	<div class="col-md-3">Default GW:</div>
+				   	<div class="col-md-3"><input value="<?=$eth0gw?>" name="eth0gw"></div>
+				   	<div class="col-md-3">Default GW:</div>
+				   	<div class="col-md-3"><input value="<?=$eth1gw?>" name="eth1gw"></div>
+				   </div>
 
-   			   <div class="row">
-			   	<div class="col-md-3">DNS Servers:</div>
-			   	<div class="col-md-3"><input value="<?=$eth0dns?>" name="eth0dns"></div>
-			   	<div class="col-md-3">DNS Servers:</div>
-			   	<div class="col-md-3"><input value="<?=$eth1dns?>" name="eth1dns"></div>
-			   </div>
+	   			   <div class="row">
+				   	<div class="col-md-3">DNS Servers:</div>
+				   	<div class="col-md-3"><input value="<?=$eth0dns?>" name="eth0dns"></div>
+				   	<div class="col-md-3">DNS Servers:</div>
+				   	<div class="col-md-3"><input value="<?=$eth1dns?>" name="eth1dns"></div>
+				   </div>
 
-			   <div class="row">
-			   	<button type="submit" class="col-md-3 save-btn">
-			   		Save
-			   	</button>
-				<div class="col-md-5"></div>
-				<!-- this button needs to call menu.php to refresh itself -->
-				<button type="submit" class="col-md-3 save-btn">
-			   		Refresh
-			   	</button>
-			   </div>
+				   <div class="row">
+				   	<button type="submit" class="col-md-3 save-btn">
+				   		Save
+				   	</button>
+					<div class="col-md-5"></div>
+					<!-- this button needs to call menu.php to refresh itself -->
+					<a type="submit" class="col-md-3 save-btn"  href="<?=$base_url?>menu.php?refresh=network">
+				   		Refresh
+				   	</a>
+				   </div>
 			  </div>
-			  <div id="menu-alerts" class="tab-pane fade">
-				<div class="col-md-8"></div>
-				<button type="submit" class="col-md-3 save-btn">
-			   		Refresh
-			   	</button>
-			  <?php
-				//if (!file_exists($alerts_file_path)) 
-				//{
-				//	echo "The file $alerts_file_path does not exist, can not display....";
-				//}
-				//$lines = file_get_contents($alerts_file_path, true);
-				//echo $lines;
-				if ($file = fopen($alerts_file_path, "r")) 
-				{
-					while(!feof($file)) 
+
+			  <div id="menu-alerts" class="tab-pane fade in  <?php if($refresh_tab=="alerts")echo 'active';?>" style="max-height: 300px;overflow-y: scroll;">
+					<div class="col-md-8"></div>
+					<a type="submit" class="col-md-3 save-btn"  href="<?=$base_url?>menu.php?refresh=alerts">
+				   		Refresh
+				   	</a>
+				  <?php
+					//if (!file_exists($alerts_file_path)) 
+					//{
+					//	echo "The file $alerts_file_path does not exist, can not display....";
+					//}
+					//$lines = file_get_contents($alerts_file_path, true);
+					//echo $lines;
+					if ($file = fopen($alerts_file_path, "r")) 
 					{
-						$line = fgets($file);
-						# do same stuff with the $line
-						echo "<p>".$line."</p>";
+						while(!feof($file)) 
+						{
+							$line = fgets($file);
+							# do same stuff with the $line
+							echo "<p>".$line."</p>";
+						}
+						fclose($file);
 					}
-					fclose($file);
-				}
-				?>
+					?>
 			  </div>
 			  <!-- connections tab --> 
-			 <div id="menu-connections" class="tab-pane fade">
-				<!--
-				<p>Some content in menu 1.</p>
-			    <p>Some content in menu 2.</p>
-			    <p>Some content in menu 3.</p>
-			    <p>etc...</p>
+			 <div id="menu-connections" class="tab-pane fade  in  <?php if($refresh_tab=="connections")echo 'active';?>">
 				
-				<div class="col-md-8"></div>
-				<button type="submit" class="col-md-3 save-btn">
-			   		Refresh
-			   	</button>
-			   </div>
-			   -->
 			  </div>
 			  
 			</div>

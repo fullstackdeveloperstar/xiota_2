@@ -504,3 +504,8 @@ a.w3ls-right {
 }
 
 /*--//responsive--*/
+
+.label-for-input{
+	font-size: 20px!important;
+    font-weight: 600!important;
+}

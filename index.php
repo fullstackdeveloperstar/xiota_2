@@ -28,6 +28,7 @@ require "logincheck.php";
 	<!-- Stylesheets -->
 	<link href="css/font-awesome.css" rel="stylesheet">
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
+
 	<!--// Stylesheets -->
 </head>
 
@@ -54,12 +55,12 @@ require "logincheck.php";
 		<!-- form starts here -->
 		<form name="myform" method="POST" action="login.php">
 			<div class="agile-field-txt">
-				<label>
+				<label class="label-for-input">
 					<i class="fa fa-user" aria-hidden="true"></i> Username :</label>
 				<input type="text" name="user" value="" placeholder=" " required="" />
 			</div>
 			<div class="agile-field-txt">
-				<label>
+				<label class="label-for-input">
 					<i class="fa fa-lock" aria-hidden="true"></i> password :</label>
 				<input type="password" name="password" value="" placeholder=" " required="" id="myInput" />
 				<div class="agile_label">
