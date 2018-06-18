@@ -33,7 +33,7 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 	// shell_exec('os-scripts/osnet.sh dns r eth0');
 
 	// run scripts here
-	
+
 	$_SESSION['is_first_into'] = 'no';
 	
 }
@@ -69,12 +69,12 @@ $eth1ip = "";
 $eth0mask = shell_exec('os-scripts/osnet.sh intmask r eth0');
 
 #ethernet 1 net mask
-$eth1mask = $lines[6];
+$eth1mask = "";
 #ethernet 0 def gw
 $eth0gw  = shell_exec('os-scripts/osnet.sh gateway r eth0');
 
 #ethernet 1 def gw
-$eth1gw = $lines[8];
+$eth1gw = "";
 #ethernet 0 dns
 $eth0dns = shell_exec('os-scripts/osnet.sh dns r eth0');
 
