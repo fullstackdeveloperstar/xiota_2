@@ -1,0 +1,7 @@
+hostname
+mode
+statuse
+eth0ip
+eth1 ip
+eth0 mstr
+eth0 rem

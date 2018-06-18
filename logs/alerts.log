@@ -1,0 +1,106 @@
+Dec 14 22:21:43	LOGGING STARTED
+Dec 14 22:26:29	DISK_WARN spare-parts:sda1 at 96% full
+Dec 14 22:30:18	DISK_WARN centurion042:sda1 at 97% full
+Dec 14 22:30:33	DISK_WARN stonesoup00:sda1 at 93% full
+Dec 14 22:31:54	PING_WARN centurion023.cs.Virginia.EDU not responding
+Dec 14 22:33:52	DISK_WARN zazo:sda1 at 92% full
+Dec 14 22:34:49	DISK_WARN stonesoup01:sda1 at 92% full
+Dec 14 22:35:01	DISK_WARN stonesoup09:sda1 at 93% full
+Dec 14 22:35:04	DISK_WARN stonesoup06:sda3 at 97% full
+Dec 14 22:35:04	DISK_WARN gleep:sdb1 at 100% full
+Dec 14 22:36:00	DISK_WARN siamese:sda3 at 97% full
+Dec 15 08:52:04	PING_WARN wumpus.cs.Virginia.EDU not responding
+Dec 15 09:02:04	PING_CLEAR wumpus.cs.Virginia.EDU is now responding
+Dec 15 09:22:58	SWAP_WARN wumpus has not reported in over 10 mins
+Dec 15 09:22:58	DISK_WARN wumpus has not reported in over 10 mins
+Dec 15 09:22:58	LOAD_WARN wumpus has not reported in over 10 mins
+Dec 15 13:58:26	SWAP_CLEAR wumpus is now reporting in
+Dec 15 13:58:26	DISK_CLEAR wumpus is now reporting in
+Dec 15 13:58:26	LOAD_CLEAR wumpus is now reporting in
+Dec 16 13:20:02	DISK_WARN thuban:hda1 at 91% full
+Dec 16 13:25:00	DISK_CLEAR thuban:hda1 is down to 85%
+Dec 16 13:56:02	SWAP_WARN scout has not reported in over 10 mins
+Dec 16 13:56:02	SWAP_WARN siamese has not reported in over 10 mins
+Dec 16 13:56:02	SWAP_WARN centurion051 has not reported in over 10 mins
+Dec 16 13:56:02	DISK_WARN scout has not reported in over 10 mins
+Dec 16 13:56:02	DISK_WARN siamese has not reported in over 10 mins
+Dec 16 13:56:02	DISK_WARN centurion051 has not reported in over 10 mins
+Dec 16 13:56:02	LOAD_WARN scout has not reported in over 10 mins
+Dec 16 13:56:02	LOAD_WARN siamese has not reported in over 10 mins
+Dec 16 13:56:02	LOAD_WARN centurion051 has not reported in over 10 mins
+Dec 16 14:01:02	SWAP_CLEAR scout is now reporting in
+Dec 16 14:01:02	SWAP_CLEAR siamese is now reporting in
+Dec 16 14:01:02	SWAP_CLEAR centurion051 is now reporting in
+Dec 16 14:01:02	DISK_CLEAR scout is now reporting in
+Dec 16 14:01:02	DISK_CLEAR siamese is now reporting in
+Dec 16 14:01:02	DISK_CLEAR centurion051 is now reporting in
+Dec 16 14:01:02	LOAD_CLEAR scout is now reporting in
+Dec 16 14:01:02	LOAD_CLEAR siamese is now reporting in
+Dec 16 14:01:02	LOAD_CLEAR centurion051 is now reporting in
+Dec 16 15:15:59	DISK_WARN stonesoup00: sda1 at 98% full
+Dec 21 13:45:37	SWAP_WARN centurion001: 80% used
+Dec 21 13:50:37	SWAP_CLEAR centurion001 is back down to 79%
+Dec 21 14:00:38	SWAP_WARN centurion001: 80% used
+Dec 21 14:05:38	SWAP_CLEAR centurion001 is back down to 79%
+Dec 21 14:40:39	SWAP_WARN centurion001: 80% used
+Dec 21 14:50:40	SWAP_CLEAR centurion001 is back down to 16%
+Dec 22 09:21:42	SWAP_WARN spare-parts: 89% used
+Dec 22 09:26:41	SWAP_CLEAR spare-parts is back down to 54%
+Dec 22 11:45:46	SWAP_WARN centurion047: 81% used
+Dec 22 11:50:46	SWAP_CLEAR centurion047 is back down to 46%
+Dec 22 11:55:45	SWAP_WARN centurion047: 81% used
+Dec 22 12:05:46	SWAP_CLEAR centurion047 is back down to 46%
+Dec 23 10:21:19	SWAP_WARN siamese has not reported in over 10 mins
+Dec 23 10:21:19	DISK_WARN siamese has not reported in over 10 mins
+Dec 23 10:26:20	SWAP_CLEAR siamese is now reporting in
+Dec 23 10:26:20	DISK_CLEAR siamese is now reporting in
+Dec 28 13:22:16	PING_WARN centurion053.cs.Virginia.EDU not responding
+Dec 28 13:32:15	PING_CLEAR centurion053.cs.Virginia.EDU is now responding
+Dec 30 14:22:22	PING_WARN centurion052.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion053.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion054.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion055.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion056.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion057.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion058.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion059.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion060.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion061.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion062.cs.Virginia.EDU not responding
+Dec 30 14:22:22	PING_WARN centurion063.cs.Virginia.EDU not responding
+Dec 30 14:32:18	PING_CLEAR centurion052.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion053.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion054.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion055.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion056.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion057.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion058.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion059.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion060.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion061.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion062.cs.Virginia.EDU is now responding
+Dec 30 14:32:18	PING_CLEAR centurion063.cs.Virginia.EDU is now responding
+Dec 30 14:52:18	PING_WARN centurion038.cs.Virginia.EDU not responding
+Dec 30 15:02:18	PING_CLEAR centurion038.cs.Virginia.EDU is now responding
+Dec 30 20:10:28	DISK_WARN centurion010:sda3 at 90% full
+Dec 30 21:50:02	SWAP_CLEAR stonesoup03 is now reporting in
+Dec 30 21:50:02	DISK_CLEAR stonesoup03 is now reporting in
+Dec 30 21:50:02	LOAD_CLEAR stonesoup03 is now reporting in
+Dec 31 15:05:21	DISK_WARN vanguard:sda4 at 90% full
+Dec 31 19:00:20	DISK_WARN vanguard: sda4 at 95% full
+Jan 2 17:07:04	SWAP_WARN stonesoup08 has not reported in over 10 mins
+Jan 2 17:12:04	SWAP_CLEAR stonesoup08 is now reporting in
+Jan 3 14:09:21	DISK_WARN stonesoup06 has not reported in over 10 mins
+Jan 3 14:09:21	LOAD_WARN stonesoup06 has not reported in over 10 mins
+Jan 3 14:14:21	SWAP_WARN stonesoup06 has not reported in over 10 mins
+Jan 3 14:24:22	LOAD_CLEAR stonesoup06 is now reporting in
+Jan 3 14:34:23	LOAD_WARN stonesoup06 has not reported in over 10 mins
+Jan 3 14:39:24	SWAP_CLEAR stonesoup06 is now reporting in
+Jan 3 14:39:24	DISK_CLEAR stonesoup06 is now reporting in
+Jan 3 14:39:24	LOAD_CLEAR stonesoup06 is now reporting in
+Jan 3 16:33:10	DISK_CLEAR stonesoup06:sda3 is down to 89%
+Jan 3 16:43:12	DISK_WARN stonesoup06:sda3 at 90% full
+Jan 4 10:25:05	DISK_CLEAR vanguard:sda4 is down to 82%
+Jan 4 10:30:30	DISK_CLEAR centurion010:sda3 is down to 89%
+Jan 4 14:02:00	SWAP_WARN spare-parts: 97% used
+Jan 4 15:15:29	DISK_WARN centurion010:sda3 at 90% full
