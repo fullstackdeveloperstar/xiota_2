@@ -26,13 +26,13 @@ $lines = file($setting_file_path, FILE_IGNORE_NEW_LINES);
 //$host = $lines[0];
 #hostname
 $host = $lines[0];
-shell_exec('os-scripts/osnet.sh hostname r');
+
 #mode - master or remote
 $mode = $lines[1];
-shell_exec('os-scripts/osnet.sh mode');
+
 #status - this will be a radio button of enabled or disabled-check process -need process
 $checkstatus = $lines[2] == "checked" ? "checked":"";
-shell_exec('ps -ef | grep runproc.sh | grep -v grep');
+
 if ($checkstatus == "") 
 {
 	$disabledstatus = "checked";
@@ -45,27 +45,38 @@ else
 }
 #ethernet 0 IP Address
 $eth0ip = $lines[3];
-shell_exec('os-scripts/osnet.sh intIP r eth0');
+
 #ethernet 1 IP Address
 $eth1ip = $lines[4];
 #ethernet 0 net mask
 $eth0mask = $lines[5];
-shell_exec('os-scripts/osnet.sh intmask r eth0');
+
 #ethernet 1 net mask
 $eth1mask = $lines[6];
 #ethernet 0 def gw
 $eth0gw  = $lines[7];
-shell_exec('os-scripts/osnet.sh gateway r eth0');
+
 #ethernet 1 def gw
 $eth1gw = $lines[8];
 #ethernet 0 dns
 $eth0dns = $lines[9];
-shell_exec('os-scripts/osnet.sh dns r eth0');
+
 #ethernet 1 dns
 $eth1dns = $lines[10];
 ##### passwords
 $newpass1 = "";
 $newpass2 = "";
+
+if(isset($_GET['refresh']))
+{
+	shell_exec('os-scripts/osnet.sh hostname r');
+	shell_exec('os-scripts/osnet.sh mode');
+	shell_exec('ps -ef | grep runproc.sh | grep -v grep');
+	shell_exec('os-scripts/osnet.sh intIP r eth0');
+	shell_exec('os-scripts/osnet.sh intmask r eth0');
+	shell_exec('os-scripts/osnet.sh gateway r eth0');
+	shell_exec('os-scripts/osnet.sh dns r eth0');
+}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -139,6 +150,7 @@ $newpass2 = "";
     		border-radius: 0;
     		margin-right: 0;
     		padding-bottom: 3px;
+    		padding-top: 3px;
 		}
 
 		.xiota-content .nav .active{

@@ -1,6 +1,19 @@
 <?php
 require "global.php";
 require "logincheck.php";
+$lines = file($setting_file_path, FILE_IGNORE_NEW_LINES);
+
+$old_host = $lines[0];
+$old_mode = $lines[1];
+$old_checkstatus = $lines[2] == "checked" ? "checked":"";
+$old_eth0ip = $lines[3];
+$old_eth1ip = $lines[4];
+$old_eth0mask = $lines[5];
+$old_eth1mask = $lines[6];
+$old_eth0gw  = $lines[7];
+$old_eth1gw = $lines[8];
+$old_eth0dns = $lines[9];
+$old_eth1dns = $lines[10];
 
 if (isset($_POST['host']) 
     && isset($_POST['mode']) && isset($_POST['status'])
@@ -30,8 +43,6 @@ if (isset($_POST['host'])
     $th1mstr = $_POST['eth1mask'];
     $eth0gw = $_POST['eth0gw'];
     $eth1gw = $_POST['eth1gw'];
-    $eth0gw = $_POST['eth0dns'];
-    $eth1gw = $_POST['eth1dns'];
     $eth0dns = $_POST['eth0dns'];
     $eth1dns = $_POST['eth1dns'];
 
@@ -47,49 +58,69 @@ if (isset($_POST['host'])
     fwrite($settingfile, $eth1gw);fwrite($settingfile, "\n");
     fwrite($settingfile, $eth0dns);fwrite($settingfile, "\n");
     fwrite($settingfile, $eth1dns);fwrite($settingfile, "\n");
-    // header("Location:menu.php");
-    // exit();
+    
+    // run scripts here
+
+    if($old_host != $host){
+        echo 'old_host';
+    }
+
+    if($old_mode != $mode)
+    {
+     echo 'old_mode';   
+    }
+
+    if($old_checkstatus != $status)
+    {
+      echo 'old_status';
+    }
+
+    if($old_eth0ip != $th0ip)
+    {
+       echo 'old_eth0ip';
+    }
+
+    if($old_eth1ip != $th1ip)
+    {
+       echo 'old_eth1ip';
+    }
+
+    if($old_eth0mask != $th0mstr)
+    {
+        echo 'old_eth0mask';
+    }
+
+    if($old_eth1mask != $th1mstr)
+    {
+        echo 'old_eth1mask';
+    }
+
+    if($old_eth0gw != $eth0gw)
+    {
+        echo 'old_eth0gw';
+    }
+
+    if($old_eth1gw != $eth1gw)
+    {
+        echo 'old_eth1gw';
+    }
+
+    if($old_eth0dns != $eth0dns)
+    {
+        echo 'old_eth0dns';
+    }
+
+    if($old_eth1dns != $eth1dns)
+    {
+        echo 'old_eth1dns';
+    }
+
+    header("Location:menu.php");
+    exit();
+
+
+
 }
 else{
     echo "Mode set error, contact RACWorc support";    
 }
-
-
-
-
-// //$host = $lines[0];
-// #hostname
-// $host = shell_exec('os-scripts/osnet.sh hostname r');
-// #mode - master or remote
-// $mode = shell_exec('os-scripts/osnet.sh mode');
-// #status - this will be a radio button of enabled or disabled-check process -need process
-// $checkstatus = shell_exec('ps -ef | grep runproc.sh | grep -v grep');
-// if ($checkstatus == "") 
-// {
-//     $disabledstatus = "checked";
-//     $enabledstatus = "";
-// }
-// else
-// {
-//     $enabledstatus = "checked";
-//     $disabledstatus = "";
-// }
-// #ethernet 0 IP Address
-// $eth0ip = shell_exec('os-scripts/osnet.sh intIP r eth0');
-// #ethernet 1 IP Address
-// $eth1ip = "";
-// #ethernet 0 net mask
-// $eth0mask = shell_exec('os-scripts/osnet.sh intmask r eth0');
-// #ethernet 1 net mask
-// $eth1mask = "";
-// #ethernet 0 def gw
-// $eth0gw = shell_exec('os-scripts/osnet.sh gateway r eth0');
-// #ethernet 1 def gw
-// $eth1gw = "";
-// #ethernet 0 dns
-// $eth0dns = shell_exec('os-scripts/osnet.sh dns r eth0');
-// #ethernet 1 dns
-// $eth1dns = "";
-// ##### passwords
-// $newpass1 = "";
-// $newpass2 = "";
