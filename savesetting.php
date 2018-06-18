@@ -2,12 +2,17 @@
 require "global.php";
 require "logincheck.php";
 
-if (isset($_POST['host']) && isset($_POST['mode']) && isset($_POST['status']) )
-    // && isset($_POST['th0ip']) 
-    // && isset($_POST['th1ip']) 
-    // && isset($_POST['th0mstr']) 
-    // && isset($_POST['th0rem'])
-// )
+if (isset($_POST['host']) 
+    && isset($_POST['mode']) && isset($_POST['status'])
+    && isset($_POST['eth0ip']) 
+    && isset($_POST['eth1ip']) 
+    && isset($_POST['eth0mask']) 
+    && isset($_POST['eth1mask'])
+    && isset($_POST['eth0gw']) 
+    && isset($_POST['eth1gw'])
+    && isset($_POST['eth0dns']) 
+    && isset($_POST['eth1dns'])
+)
 {
     $host = $_POST['host'];
     $mode = $_POST['mode'];
@@ -19,23 +24,36 @@ if (isset($_POST['host']) && isset($_POST['mode']) && isset($_POST['status']) )
         $status = "";
     }
 
-    // $th0ip = $_POST['th0ip'];
-    // $th1ip = $_POST['th1ip'];
-    // $th0mstr = $_POST['th0mstr'];
-    // $th0rem = $_POST['th0rem'];
+    $th0ip = $_POST['eth0ip'];
+    $th1ip = $_POST['eth1ip'];
+    $th0mstr = $_POST['eth0mask'];
+    $th1mstr = $_POST['eth1mask'];
+    $eth0gw = $_POST['eth0gw'];
+    $eth1gw = $_POST['eth1gw'];
+    $eth0gw = $_POST['eth0dns'];
+    $eth1gw = $_POST['eth1dns'];
+    $eth0dns = $_POST['eth0dns'];
+    $eth1dns = $_POST['eth1dns'];
+
 	$settingfile = fopen($setting_file_path, "w") or die("Unable to open file!");
     fwrite($settingfile, $host);fwrite($settingfile, "\n");
     fwrite($settingfile, $mode);fwrite($settingfile, "\n");
     fwrite($settingfile, $status);fwrite($settingfile, "\n");
-    // fwrite($settingfile, $th0ip);fwrite($settingfile, "\n");
-    // fwrite($settingfile, $th1ip);fwrite($settingfile, "\n");
-    // fwrite($settingfile, $th0mstr);fwrite($settingfile, "\n");
-    // fwrite($settingfile, $th0rem);fwrite($settingfile, "\n");
+    fwrite($settingfile, $th0ip);fwrite($settingfile, "\n");
+    fwrite($settingfile, $th1ip);fwrite($settingfile, "\n");
+    fwrite($settingfile, $th0mstr);fwrite($settingfile, "\n");
+    fwrite($settingfile, $th1mstr);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth0gw);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth1gw);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth0dns);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth1dns);fwrite($settingfile, "\n");
     // header("Location:menu.php");
     // exit();
 }
+else{
+    echo "Mode set error, contact RACWorc support";    
+}
 
-echo "Mode set error, contact RACWorc support";
 
 
 

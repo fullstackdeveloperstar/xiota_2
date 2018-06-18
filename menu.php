@@ -4,7 +4,7 @@ require "global.php";
 if(isset($_GET['refresh']))
 {
 	$refresh_tab = $_GET['refresh'];
-	echo $refresh_tab;
+	// echo $refresh_tab;
 }
 else{
 	$refresh_tab = 'status';
