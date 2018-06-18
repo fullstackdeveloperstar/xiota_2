@@ -24,17 +24,8 @@ if (!file_exists($setting_file_path)) {
 
 if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
 {
-	// shell_exec('os-scripts/osnet.sh hostname r');
-	// shell_exec('os-scripts/osnet.sh mode');
-	// shell_exec('ps -ef | grep runproc.sh | grep -v grep');
-	// shell_exec('os-scripts/osnet.sh intIP r eth0');
-	// shell_exec('os-scripts/osnet.sh intmask r eth0');
-	// shell_exec('os-scripts/osnet.sh gateway r eth0');
-	// shell_exec('os-scripts/osnet.sh dns r eth0');
-
 	// run scripts here
 
-	$_SESSION['is_first_into'] = 'no';
 	
 }
 
@@ -54,11 +45,13 @@ if ($checkstatus == "")
 {
 	$disabledstatus = "checked";
 	$enabledstatus = "";
+	$checkstatus = "";
 }
 else
 {
 	$enabledstatus = "checked";
 	$disabledstatus = "";
+	$checkstatus = "checked";
 }
 #ethernet 0 IP Address
 $eth0ip = shell_exec('os-scripts/osnet.sh intIP r eth0');
@@ -84,6 +77,23 @@ $eth1dns = "";
 $newpass1 = "";
 $newpass2 = "";
 
+// save settings
+if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
+{
+	$settingfile = fopen($setting_file_path, "w") or die("Unable to open file!");
+    fwrite($settingfile, $host);fwrite($settingfile, "\n");
+    fwrite($settingfile, $mode);fwrite($settingfile, "\n");
+    fwrite($settingfile, $checkstatus);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth0ip);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth1ip);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth0mask);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth1mask);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth0gw);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth1gw);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth0dns);fwrite($settingfile, "\n");
+    fwrite($settingfile, $eth1dns);fwrite($settingfile, "\n");
+    $_SESSION['is_first_into'] = 'no';
+}
 
 ?>
 <!DOCTYPE HTML>
