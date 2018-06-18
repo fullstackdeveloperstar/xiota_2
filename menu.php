@@ -25,11 +25,14 @@ $lines = file($setting_file_path, FILE_IGNORE_NEW_LINES);
 
 //$host = $lines[0];
 #hostname
-$host = shell_exec('os-scripts/osnet.sh hostname r');
+$host = $lines[0];
+shell_exec('os-scripts/osnet.sh hostname r');
 #mode - master or remote
-$mode = shell_exec('os-scripts/osnet.sh mode');
+$mode = $lines[1];
+shell_exec('os-scripts/osnet.sh mode');
 #status - this will be a radio button of enabled or disabled-check process -need process
-$checkstatus = shell_exec('ps -ef | grep runproc.sh | grep -v grep');
+$checkstatus = $lines[2] == "checked" ? "checked":"";
+shell_exec('ps -ef | grep runproc.sh | grep -v grep');
 if ($checkstatus == "") 
 {
 	$disabledstatus = "checked";
@@ -41,21 +44,25 @@ else
 	$disabledstatus = "";
 }
 #ethernet 0 IP Address
-$eth0ip = shell_exec('os-scripts/osnet.sh intIP r eth0');
+$eth0ip = $lines[3];
+shell_exec('os-scripts/osnet.sh intIP r eth0');
 #ethernet 1 IP Address
-$eth1ip = "";
+$eth1ip = $lines[4];
 #ethernet 0 net mask
-$eth0mask = shell_exec('os-scripts/osnet.sh intmask r eth0');
+$eth0mask = $lines[5];
+shell_exec('os-scripts/osnet.sh intmask r eth0');
 #ethernet 1 net mask
-$eth1mask = "";
+$eth1mask = $lines[6];
 #ethernet 0 def gw
-$eth0gw = shell_exec('os-scripts/osnet.sh gateway r eth0');
+$eth0gw  = $lines[7];
+shell_exec('os-scripts/osnet.sh gateway r eth0');
 #ethernet 1 def gw
-$eth1gw = "";
+$eth1gw = $lines[8];
 #ethernet 0 dns
-$eth0dns = shell_exec('os-scripts/osnet.sh dns r eth0');
+$eth0dns = $lines[9];
+shell_exec('os-scripts/osnet.sh dns r eth0');
 #ethernet 1 dns
-$eth1dns = "";
+$eth1dns = $lines[10];
 ##### passwords
 $newpass1 = "";
 $newpass2 = "";
@@ -275,8 +282,8 @@ $newpass2 = "";
 				   <div class="row">
 				   	<div class="col-md-3">Boost Status:</div>
 				   	<!-- <div class="col-md-9"><input value="<?=$status?>" name="status"></div> -->
-					<div class="col-md-3">Enabled<input type="radio" name="boostenabled" value="enabled" <?php print $enabledstatus; ?> ></div>
-					<div class="col-md-3">Disabled<input type="radio" name="boostdisabled" value="disabled" <?php print $disabledstatus; ?> ></div>
+					<div class="col-md-3">Enabled<input type="radio" name="status" value="enabled" <?php print $enabledstatus; ?> ></div>
+					<div class="col-md-3">Disabled<input type="radio" name="status" value="disabled" <?php print $disabledstatus; ?> ></div>
 					</div>
 
 				 <hr style="border: solid 1px #545050;"> 
