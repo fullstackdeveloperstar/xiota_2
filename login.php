@@ -20,6 +20,7 @@ foreach ($lines as $line)
     {
         $_SESSION['is_logged_in'] = 'loggedin';
         $_SESSION['username'] = $user;
+        $_SESSION['is_first_into'] = 'yes';
         
         header("Location:menu.php");
         exit(0);

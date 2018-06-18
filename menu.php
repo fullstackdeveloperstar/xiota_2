@@ -67,7 +67,7 @@ $eth1dns = $lines[10];
 $newpass1 = "";
 $newpass2 = "";
 
-if(isset($_GET['refresh']))
+if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
 {
 	shell_exec('os-scripts/osnet.sh hostname r');
 	shell_exec('os-scripts/osnet.sh mode');
@@ -76,6 +76,10 @@ if(isset($_GET['refresh']))
 	shell_exec('os-scripts/osnet.sh intmask r eth0');
 	shell_exec('os-scripts/osnet.sh gateway r eth0');
 	shell_exec('os-scripts/osnet.sh dns r eth0');
+
+
+	$_SESSION['is_first_into'] = 'no';
+	
 }
 ?>
 <!DOCTYPE HTML>
