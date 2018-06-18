@@ -21,17 +21,34 @@ if (!file_exists($setting_file_path)) {
         exit(1);
 }
 
+
+if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
+{
+	// shell_exec('os-scripts/osnet.sh hostname r');
+	// shell_exec('os-scripts/osnet.sh mode');
+	// shell_exec('ps -ef | grep runproc.sh | grep -v grep');
+	// shell_exec('os-scripts/osnet.sh intIP r eth0');
+	// shell_exec('os-scripts/osnet.sh intmask r eth0');
+	// shell_exec('os-scripts/osnet.sh gateway r eth0');
+	// shell_exec('os-scripts/osnet.sh dns r eth0');
+
+	// run scripts here
+	
+	$_SESSION['is_first_into'] = 'no';
+	
+}
+
 $lines = file($setting_file_path, FILE_IGNORE_NEW_LINES);
 
 //$host = $lines[0];
 #hostname
-$host = $lines[0];
+$host = shell_exec('os-scripts/osnet.sh hostname r');
 
 #mode - master or remote
-$mode = $lines[1];
+$mode = shell_exec('os-scripts/osnet.sh mode');
 
 #status - this will be a radio button of enabled or disabled-check process -need process
-$checkstatus = $lines[2] == "checked" ? "checked":"";
+$checkstatus = shell_exec('ps -ef | grep runproc.sh | grep -v grep');
 
 if ($checkstatus == "") 
 {
@@ -44,43 +61,30 @@ else
 	$disabledstatus = "";
 }
 #ethernet 0 IP Address
-$eth0ip = $lines[3];
+$eth0ip = shell_exec('os-scripts/osnet.sh intIP r eth0');
 
 #ethernet 1 IP Address
-$eth1ip = $lines[4];
+$eth1ip = "";
 #ethernet 0 net mask
-$eth0mask = $lines[5];
+$eth0mask = shell_exec('os-scripts/osnet.sh intmask r eth0');
 
 #ethernet 1 net mask
 $eth1mask = $lines[6];
 #ethernet 0 def gw
-$eth0gw  = $lines[7];
+$eth0gw  = shell_exec('os-scripts/osnet.sh gateway r eth0');
 
 #ethernet 1 def gw
 $eth1gw = $lines[8];
 #ethernet 0 dns
-$eth0dns = $lines[9];
+$eth0dns = shell_exec('os-scripts/osnet.sh dns r eth0');
 
 #ethernet 1 dns
-$eth1dns = $lines[10];
+$eth1dns = "";
 ##### passwords
 $newpass1 = "";
 $newpass2 = "";
 
-if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
-{
-	shell_exec('os-scripts/osnet.sh hostname r');
-	shell_exec('os-scripts/osnet.sh mode');
-	shell_exec('ps -ef | grep runproc.sh | grep -v grep');
-	shell_exec('os-scripts/osnet.sh intIP r eth0');
-	shell_exec('os-scripts/osnet.sh intmask r eth0');
-	shell_exec('os-scripts/osnet.sh gateway r eth0');
-	shell_exec('os-scripts/osnet.sh dns r eth0');
 
-
-	$_SESSION['is_first_into'] = 'no';
-	
-}
 ?>
 <!DOCTYPE HTML>
 <html>
