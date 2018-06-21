@@ -1,6 +1,9 @@
 <?php
+
+// read in globals
 require "global.php";
 
+// set the refresh or default tab 
 if(isset($_GET['refresh']))
 {
 	$refresh_tab = $_GET['refresh'];
@@ -9,38 +12,31 @@ if(isset($_GET['refresh']))
 else{
 	$refresh_tab = 'status';
 }
-
-
-
+// ensure that we are logged in first
 if(!isset($_SESSION['is_logged_in']) ||  $_SESSION['is_logged_in'] != "loggedin" ){
 	header("Location:index.php");
 }
-
-if (!file_exists($setting_file_path)) {
-    echo "The file $filename does not exist, failure and exiting....";
-        exit(1);
-}
-
-
-if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
+// verify the setting file so we can write current out - we then can compare memory vars to see if changes
+if (!file_exists($setting_file_path)) 
 {
-	// run scripts here
-
-	
+    echo "The file $filename does not exist, failure and exiting....";
+    exit(1);
+}
+else
+{
+	// read in the settings for now - this else may be deleted after testing
+	$lines = file($setting_file_path, FILE_IGNORE_NEW_LINES);
 }
 
-$lines = file($setting_file_path, FILE_IGNORE_NEW_LINES);
-
-//$host = $lines[0];
+// *********** RUN Scripts and load up memory variables
 #hostname
 $host = shell_exec('os-scripts/osnet.sh hostname r');
 
 #mode - master or remote
 $mode = shell_exec('os-scripts/osnet.sh mode');
 
-#status - this will be a radio button of enabled or disabled-check process -need process
+#status - this will be a radio button of enabled or disabled..need to read file setting from ivan
 $checkstatus = shell_exec('ps -ef | grep runproc.sh | grep -v grep');
-
 if ($checkstatus == "") 
 {
 	$disabledstatus = "checked";
@@ -53,33 +49,55 @@ else
 	$disabledstatus = "";
 	$checkstatus = "checked";
 }
+
+// boost status
+$checkstatus = shell_exec('ps -ef | grep runproc.sh | grep -v grep');
+if ($checkstatus == "") 
+{
+	$booststatus = "NOT Running....";
+}
+else
+{
+	$booststatus = "Running....";
+}
+
+
 #ethernet 0 IP Address
 $eth0ip = shell_exec('os-scripts/osnet.sh intIP r eth0');
-
 #ethernet 1 IP Address
 $eth1ip = "";
+
 #ethernet 0 net mask
 $eth0mask = shell_exec('os-scripts/osnet.sh intmask r eth0');
-
 #ethernet 1 net mask
 $eth1mask = "";
+
 #ethernet 0 def gw
 $eth0gw  = shell_exec('os-scripts/osnet.sh gateway r eth0');
-
 #ethernet 1 def gw
 $eth1gw = "";
+
 #ethernet 0 dns
 $eth0dns = shell_exec('os-scripts/osnet.sh dns r eth0');
-
 #ethernet 1 dns
 $eth1dns = "";
-##### passwords
+
+//#### passwords for entry if they want to change them
 $newpass1 = "";
 $newpass2 = "";
 
+// *** cpu util
+$cpuutil = shell_exec('os-scripts/osnet.sh cpuutil');
+
+// *** mem util
+$memutil = shell_exec('os-scripts/osnet.sh memutil');
+
+// **** think we should always write these out.. commenting out if statement
 // save settings
-if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
-{
+//if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['is_first_into'] == 'yes'))
+//{
+	// these MUST be in the exact order here AND read in the same order read in in the savesettings.php
+	// this shouldn't have any problems opening as the test was done already for its existing
 	$settingfile = fopen($setting_file_path, "w") or die("Unable to open file!");
     fwrite($settingfile, $host);fwrite($settingfile, "\n");
     fwrite($settingfile, $mode);fwrite($settingfile, "\n");
@@ -93,7 +111,7 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
     fwrite($settingfile, $eth0dns);fwrite($settingfile, "\n");
     fwrite($settingfile, $eth1dns);fwrite($settingfile, "\n");
     $_SESSION['is_first_into'] = 'no';
-}
+//}
 
 ?>
 <!DOCTYPE HTML>
@@ -153,9 +171,9 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 		}
 		
 		.xiota-content{
-			width: 500px;
-		    max-width: 500px;
-		    margin: 50px auto;
+			width: 600px;
+		    max-width: 600px;
+		    margin: 20px auto;
 		    background: #f2f2f2;
 		    padding: 10px;
 		    box-shadow: 3px 3px 20px 3px #585858;
@@ -235,6 +253,18 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 			margin-top: 10px;
 		}
 
+		#menu-support{
+
+		}
+
+		#menu-support input{
+			width: 100%;
+		}
+
+		#menu-support .row{
+			margin-top: 10px;
+		}
+
 		.save-btn{
 			background: #dc2424;
 		    margin: 8px;
@@ -263,7 +293,7 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 			</div>	
 		</div>
 
-		
+		<div style="margin-top: -60px;">
 			<?php
 				if (file_exists($mode_file_path)) 
 				{
@@ -271,30 +301,56 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 					$line = file_get_contents($mode_file_path, true);
 					if ($line == "Master")
 					{
-						//echo "<div class=\"top-menu-item-lg\">MIOTA</div>";
-						echo "<div><h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>MIOTA</b></h1></div>";
+						echo "<h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>MIOTA</b></h1>";
 					}
 					else
 					{
-						//echo "<div class=\"top-menu-item-lg\">RIOTA</div>";
-						echo "<div ><h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>RIOTA</b></h1></div>";
+						echo "<h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>RIOTA</b></h1>";
 					}
 				}
 			?>
+			<h2 style="margin: 0;">Version: 1.0</h2>
+		</div>
+
 		<div class="xiota-content">
 			<ul class="nav nav-tabs">
 			  <li class="<?php if($refresh_tab=="status")echo 'active';?>"><a data-toggle="tab" href="#menu-status">Status</a></li>
-  			  <li class="<?php if($refresh_tab=="settings")echo 'active';?>"><a data-toggle="tab" href="#menu-settings">Settings</a></li>
+			  <li class="<?php if($refresh_tab=="settings")echo 'active';?>"><a data-toggle="tab" href="#menu-settings">Settings</a></li>
 			  <li class="<?php if($refresh_tab=="network")echo 'active';?>"><a data-toggle="tab" href="#menu-network">Network</a></li>
 			  <li class="<?php if($refresh_tab=="connections")echo 'active';?>"><a data-toggle="tab" href="#menu-connections">Connections</a></li>
 			  <li class="<?php if($refresh_tab=="alerts")echo 'active';?>"><a data-toggle="tab" href="#menu-alerts">Alerts</a></li>
+			  <li class="<?php if($refresh_tab=="support")echo 'active';?>"><a data-toggle="tab" href="#menu-support">Support</a></li>
 			</ul>
 
 			<form name="myform" method="POST" action="savesetting.php">
 			<div class="tab-content">
 			<!-- status tab --> 
 			 <div id="menu-status" class="tab-pane fade in <?php if($refresh_tab=="status")echo 'active';?>">
-				
+				   <div class="row">
+					<div class="col-md-6"><big><u><b>SYSTEM STATUS</b></u></big></div>
+				   </div>
+				   
+				   <div class="row">
+				   	<div class="col-md-3">Boost Status:</div>
+				   	<div class="col-md-6"><?=$booststatus?></div>
+				   </div>
+
+				   <div class="row">
+				   	<div class="col-md-3">CPU Util:</div>
+					<div class="col-md-6"><?=$cpuutil?></div>
+				   </div>
+
+   				   <div class="row">
+				   	<div class="col-md-3">MEM Util:</div>
+					<div class="col-md-6"><?=$memutil?></div>
+				   </div>
+
+				   <div class="row">
+					<div class="col-md-8"></div>
+					<a type="submit" class="col-md-3 save-btn"  href="<?=$base_url?>menu.php?refresh=status">
+				   		Refresh
+				   	</a>
+				   </div>
 			 </div>
 			  
 			
@@ -393,17 +449,17 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 			  </div>
 
 			  <div id="menu-alerts" class="tab-pane fade in  <?php if($refresh_tab=="alerts")echo 'active';?>" style="max-height: 300px;overflow-y: scroll;">
-					<div class="col-md-8"></div>
+					<!-- <div class="col-md-3"></div> -->
+					<div class ="row">
 					<a type="submit" class="col-md-3 save-btn"  href="<?=$base_url?>menu.php?refresh=alerts">
 				   		Refresh
 				   	</a>
+					</div>
 				  <?php
-					//if (!file_exists($alerts_file_path)) 
-					//{
-					//	echo "The file $alerts_file_path does not exist, can not display....";
-					//}
-					//$lines = file_get_contents($alerts_file_path, true);
-					//echo $lines;
+					if (!file_exists($alerts_file_path)) 
+					{
+						echo "The file $alerts_file_path does not exist, can not display....";
+					}
 					if ($file = fopen($alerts_file_path, "r")) 
 					{
 						while(!feof($file)) 
@@ -415,11 +471,28 @@ if(isset($_GET['refresh']) || (isset($_SESSION['is_first_into']) && $_SESSION['i
 						fclose($file);
 					}
 					?>
+				<!-- support tab -->
+			  </div>
+			  <div id="menu-support" class="tab-pane fade in  <?php if($refresh_tab=="support")echo 'active';?>">
+			  	<div class="row">
+					<!-- add catch for this download in savesetting.php - we'll use the same codebase -->
+					<button type="submit" class="col-md-5 save-btn">
+						Download Support Log
+					</button>
+				</div>
+				<div class="row">
+					<!-- add catch for this download in savesetting.php - we'll use the same codebase -->
+					<button type="submit" class="col-md-5 save-btn">
+						Upload IOTA Patch
+					</button>
+				</div>
 			  </div>
 			  <!-- connections tab --> 
 			 <div id="menu-connections" class="tab-pane fade  in  <?php if($refresh_tab=="connections")echo 'active';?>">
 				
 			  </div>
+			  <!-- end connections tab -->
+			  
 			  
 			</div>
 			</form>

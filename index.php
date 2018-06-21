@@ -26,8 +26,9 @@ require "logincheck.php";
 	</script>
 	<!-- //Meta-Tags -->
 	<!-- Stylesheets -->
-	<link href="css/font-awesome.css" rel="stylesheet">
+	<link href="css\fontawesome-free-5.0.13\web-fonts-with-css\css/fontawesome-all.css" rel="stylesheet">
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
 	<!--// Stylesheets -->
 </head>
