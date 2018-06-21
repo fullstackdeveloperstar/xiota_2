@@ -33,12 +33,142 @@ require "logincheck.php";
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
 
 	<!--// Stylesheets -->
+		<style type="text/css">
+		.content{
+			padding: 30px 50px;
+			padding-top: 10px; 
+		}
+
+		.top-menu{
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.top-menu-item, .top-menu-item a{
+			color: #b90b0b;
+		    font-size: 20px;
+		    font-weight: 600;
+		}
+
+		.top-menu-item-lg, .top-menu-item-lg a{
+			color: #b90b0b;
+		    font-size: 40px;
+		    font-weight: 600;
+		}
+		
+		.xiota-content{
+			width: 700px;
+		    max-width: 700px;
+		    margin: 20px auto;
+		    background: #f2f2f2;
+		    padding: 10px;
+		    box-shadow: 3px 3px 20px 3px #585858;
+		    text-align: left;
+		}
+
+		.xiota-content .nav a{
+			color: #000;
+    		font-size: 15px;
+    		border-radius: 0;
+    		margin-right: 0;
+    		padding-bottom: 3px;
+    		padding-top: 3px;
+		}
+
+		.xiota-content .nav .active{
+		    
+			border: 1px solid #000;
+			border-bottom:0;
+		}
+
+		.xiota-content .nav .active a,
+		.xiota-content .nav .active a:hover,
+		.xiota-content .nav .active a:focus{
+			background-color: #f2f2f2;
+		}
+
+		.xiota-content .nav-tabs {
+		    border-bottom: 1px solid #000;
+		}
+
+		#menu-settings{
+
+		}
+
+		#menu-settings input{
+			width: 100%;
+		}
+
+		#menu-settings .row{
+			margin-top: 10px;
+		}
+
+		#menu-status{
+
+		}
+
+		#menu-status input{
+			width: 100%;
+		}
+
+		#menu-status .row{
+			margin-top: 10px;
+		}
+
+		#menu-network{
+
+		}
+
+		#menu-network input{
+			width: 100%;
+		}
+
+		#menu-network .row{
+			margin-top: 10px;
+		}
+
+		#menu-connections{
+
+		}
+
+		#menu-connections input{
+			width: 100%;
+		}
+
+		#menu-connections .row{
+			margin-top: 10px;
+		}
+
+		#menu-support{
+
+		}
+
+		#menu-support input{
+			width: 100%;
+		}
+
+		#menu-support .row{
+			margin-top: 10px;
+		}
+
+		.save-btn{
+			background: #dc2424;
+		    margin: 8px;
+		    text-align: center;
+		    color: white;
+		    padding: 3px 8px;
+		    font-size: 16px;
+		    border-radius: 2px;
+		    border: 0;
+		}
+	</style>
 </head>
 
 <body>
 	<div id="content">
 		<img src="images/racworc.png" class="content"/>
 	</div>
+	<div style="margin-top: -55px;">
 	<?php
 		if (file_exists($mode_file_path)) 
 		{
@@ -46,14 +176,26 @@ require "logincheck.php";
 			$line = file_get_contents($mode_file_path, true);
 			if ($line == "Master")
 			{
-				echo"<h1>MIOTA</h1>";
+				echo "<h1 style=\"color: #CA291E;font-size: 3.5vw;margin-bottom: 0px;\"><b>MIOTA</b></h1>";
 			}
 			else
 			{
-				echo"<h1>RIOTA</h1>";
+				echo "<h1 style=\"color: #CA291E;font-size: 3.5vw;margin-bottom: 0px;\"><b>RIOTA</b></h1>";
 			}
 		}
+		// get version number_format
+		if (file_exists($version_file_path))
+		{
+			$verno = file_get_contents($version_file_path, true);
+		}
+		else
+		{
+			$verno = "Version Descriptor Missing.";
+		}
 	?>
+	<!-- pump out version number --> 
+	<h4 style="margin: 0;">Version: <?=$verno?></h4>
+	</div>
 	<div class="w3ls-login">
 		<!-- form starts here -->
 		<form name="myform" method="POST" action="menu.php" style="display: initial;text-align: left;">
