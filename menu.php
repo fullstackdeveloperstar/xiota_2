@@ -86,6 +86,9 @@ $eth1dns = "";
 $newpass1 = "";
 $newpass2 = "";
 
+// iota patch selection initial null
+$iotapatchname = "";
+
 // *** cpu util
 $cpuutil = shell_exec('os-scripts/osnet.sh cpuutil');
 
@@ -308,8 +311,18 @@ $memutil = shell_exec('os-scripts/osnet.sh memutil');
 						echo "<h1 style=\"color: #CA291E;font-size: 3.5vw;\"><b>RIOTA</b></h1>";
 					}
 				}
+				// get version number_format
+				if (file_exists($version_file_path))
+				{
+					$verno = file_get_contents($version_file_path, true);
+				}
+				else
+				{
+					$verno = "Version Descriptor Missing.";
+				}
 			?>
-			<h2 style="margin: 0;">Version: 1.0</h2>
+			<!-- pump out version number --> 
+			<h4 style="margin: 0;">Version: <?=$verno?></h4>
 		</div>
 
 		<div class="xiota-content">
@@ -322,7 +335,7 @@ $memutil = shell_exec('os-scripts/osnet.sh memutil');
 			  <li class="<?php if($refresh_tab=="support")echo 'active';?>"><a data-toggle="tab" href="#menu-support">Support</a></li>
 			</ul>
 
-			<form name="myform" method="POST" action="savesetting.php">
+			<form name="myform" method="POST" action="savesetting.php" enctype="multipart/form-data">
 			<div class="tab-content">
 			<!-- status tab --> 
 			 <div id="menu-status" class="tab-pane fade in <?php if($refresh_tab=="status")echo 'active';?>">
@@ -476,21 +489,83 @@ $memutil = shell_exec('os-scripts/osnet.sh memutil');
 			  <div id="menu-support" class="tab-pane fade in  <?php if($refresh_tab=="support")echo 'active';?>">
 			  	<div class="row">
 					<!-- add catch for this download in savesetting.php - we'll use the same codebase -->
-					<button type="submit" class="col-md-5 save-btn">
+					<a href="download.php" name="DownloadSupportLog" class="col-md-5 save-btn" target="_blank">
 						Download Support Log
-					</button>
+					</a>
 				</div>
+				<hr style="border: solid 1px #545050;">
+
+				   <div class="row">
+					<div class="col-md-4">Select Patch to Load.</div>
+					<div class="col-md-5"><input value="<?=$iotapatchname?>" name="iotapatchname"></div>
+					<div class="col-md-3"><input type="file" name="file-iotapatchname" accept=".zip"></div>
+				   </div>
+
 				<div class="row">
 					<!-- add catch for this download in savesetting.php - we'll use the same codebase -->
-					<button type="submit" class="col-md-5 save-btn">
+					<button type="submit" name="UploadIOTAPatch" class="col-md-5 save-btn">
 						Upload IOTA Patch
 					</button>
 				</div>
 			  </div>
 			  <!-- connections tab --> 
 			 <div id="menu-connections" class="tab-pane fade  in  <?php if($refresh_tab=="connections")echo 'active';?>">
+				<?php
+				// read in globals
+				// require "global.php";
+
+				if (file_exists($mode_file_path)) 
+				{
+					// get all the lines in the file
+					$line = file_get_contents($mode_file_path, true);
+					if ($line == "Master")
+					{
+						// display Discover Remotes button
+						echo "<div class=\"row\">";
+						echo "<button type=\"submit\" name=\"DiscoverRemotes\" class=\"col-md-5 save-btn\">";
+						echo "Discover Remotes";
+						echo "</button>";
+						echo "</div>";
+						// line 
+						echo "<hr style=\"border: solid 1px #545050;\">";
+						// now print out remotes
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-8\"><b><u>Remotes Connected</u></b></div>";
+						echo "<a type=\"submit\" class=\"col-md-3 save-btn\"  href=\"$base_url/menu.php?refresh=connections\">";
+						echo "Refresh";
+						echo "</a>";
+						echo "</div>";
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-6\">TO BE DONE</div>";
+						echo "</div>";
+					}
+					else
+					{
+						// display Connect to Master button
+						echo "<div class=\"row\">";
+						echo "<button type=\"submit\" name=\"ConnectToMaster\" class=\"col-md-5 save-btn\">";
+						echo "Connect To Master";
+						echo "</button>";
+						echo "</div>";
+						// line 
+						echo "<hr style=\"border: solid 1px #545050;\">";
+						// show connected master
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-3\">Master Connected:</div>";
+						echo "<div class=\"col-md-1\"></div>";
+						echo "<div class=\"col-md-5\">TO BE DONE</div>";
+						echo "</div>";
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-8\"></div>";
+						echo "<a type=\"submit\" class=\"col-md-3 save-btn\"  href=\"$base_url/menu.php?refresh=connections\">";
+						echo "Refresh";
+						echo "</a>";
+						echo "</div>";
+					}
+				}
+				?>
 				
-			  </div>
+			</div>
 			  <!-- end connections tab -->
 			  
 			  
